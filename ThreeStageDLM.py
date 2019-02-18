@@ -66,7 +66,7 @@ def buildThincnn():
     
     cnn = keras.models.Sequential()
     
-    layer0 = keras.layers.Conv2D(128, (9, 9), activation='relu', input_shape=(32, 32, 1))
+    layer0 = keras.layers.Conv2D(128, (9, 9), activation='relu', input_shape=(32, 32, 3))
     cnn.add(layer0)
     print(layer0.input_shape)
     print(layer0.output_shape)
