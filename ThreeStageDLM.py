@@ -66,9 +66,7 @@ def buildThincnn():
     
     cnn = keras.models.Sequential()
     
-    
-    
-    layer0 = keras.layers.Conv2D(128, (9, 9), activation='relu', input_shape=(32, 32, 3))
+    layer0 = keras.layers.Conv2D(128, (9, 9), activation='relu', input_shape=(32, 32, 1))
     cnn.add(layer0)
     print(layer0.input_shape)
     print(layer0.output_shape)
@@ -81,7 +79,77 @@ def buildThincnn():
     cnn.add(layer2)
     print(layer2.output_shape)
     
-    layer3 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer3 = keras.layers.Conv2D(256, (5, 5), activation='relu')
+    cnn.add(layer3)
+    print(layer3.output_shape)
+    
+    layer4 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    cnn.add(layer4)
+    print(layer4.output_shape)
+    
+    layer5 = keras.layers.MaxPooling2D(pool_size=(2, 2))
+    cnn.add(layer5)
+    print(layer5.output_shape)
+    
+    layer6 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    cnn.add(layer6)
+    print(layer6.output_shape)
+    
+    layer7 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    cnn.add(layer7)
+    print(layer7.output_shape)
+    
+    layer8 = keras.layers.MaxPooling2D(pool_size=(2, 2))
+    cnn.add(layer8)
+    print(layer8.output_shape)
+    
+    layer9 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    cnn.add(layer9)
+    print(layer9.output_shape)
+    
+    layer10 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    cnn.add(layer10)
+    print(layer10.output_shape)
+    
+    layer11 = keras.layers.UpSampling2D(size=(2, 2), data_format=None, interpolation='nearest')
+    cnn.add(layer11)
+    print(layer11.output_shape)
+    
+    layer12 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    cnn.add(layer12)
+    print(layer12.output_shape)
+    
+    layer13 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    cnn.add(layer13)
+    print(layer13.output_shape)
+    
+    layer14 = keras.layers.Conv2D(2, (1, 1), activation='relu')
+    cnn.add(layer14)
+    print(layer14.output_shape)
+    
+    adam = keras.optimizers.adam(lr=0.001)
+    cnn.compile(loss='categorical_crossentropy', optimizer=adam)
+    
+    return cnn
+
+def buildFusioncnn():
+    
+    cnn = keras.models.Sequential()
+    
+    layer0 = keras.layers.Conv2D(256, (9, 9), activation='relu', input_shape=(32, 32, 4))
+    cnn.add(layer0)
+    print(layer0.input_shape)
+    print(layer0.output_shape)
+    
+    layer1 = keras.layers.Conv2D(256, (7, 7))
+    cnn.add(layer1)
+    print(layer1.output_shape)
+    
+    layer2 = keras.layers.MaxPooling2D(pool_size=(2, 2))
+    cnn.add(layer2)
+    print(layer2.output_shape)
+    
+    layer3 = keras.layers.Conv2D(256, (5, 5), activation='relu')
     cnn.add(layer3)
     print(layer3.output_shape)
     
@@ -93,11 +161,11 @@ def buildThincnn():
     cnn.add(layer5)
     print(layer5.output_shape)
     
-    layer6 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer6 = keras.layers.Conv2D(256, (7, 7), activation='relu')
     cnn.add(layer6)
     print(layer6.output_shape)
     
-    layer7 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer7 = keras.layers.Conv2D(256, (9, 9), activation='relu')
     cnn.add(layer7)
     print(layer7.output_shape)
     
@@ -257,7 +325,9 @@ def main():
     
     vis = np.concatenate((img1,img2),axis=0) #change images names!!
     
+    #Another training
     
+    vis = np.concatenate((img1,img2),axis=0) #change images names!!
     
     #validate the trained network on the 5 images that were left out during training (numbers 15 to 19)       
     valimpaths = impaths_all[trainingsetsize:]
