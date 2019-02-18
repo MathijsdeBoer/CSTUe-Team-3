@@ -56,7 +56,7 @@ def buildThickcnn():
     cnn.add(layer8)
     print(layer8.output_shape)
     
-    adam = keras.optimizers.adam(lr=0.001)
+    adam = keras.optimizers.adam(lr=0.0001)
     cnn.compile(loss='categorical_crossentropy', optimizer=adam)
     
     return cnn
@@ -66,7 +66,7 @@ def buildThincnn():
     
     cnn = keras.models.Sequential()
     
-    layer0 = keras.layers.Conv2D(128, (9, 9), activation='relu', input_shape=(32, 32, 3))
+    layer0 = keras.layers.Conv2D(128, (9, 9), activation='relu', input_shape=(32, 32, 1))
     cnn.add(layer0)
     print(layer0.input_shape)
     print(layer0.output_shape)
@@ -115,19 +115,27 @@ def buildThincnn():
     cnn.add(layer11)
     print(layer11.output_shape)
     
-    layer12 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer12 = merge([layer4, layer11], mode='sum')
     cnn.add(layer12)
     print(layer12.output_shape)
     
-    layer13 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer13 = merge([layer7, layer12], mode='sum')
     cnn.add(layer13)
     print(layer13.output_shape)
     
-    layer14 = keras.layers.Conv2D(2, (1, 1), activation='relu')
+    layer14 = keras.layers.Conv2D(256, (3, 3), activation='relu')
     cnn.add(layer14)
     print(layer14.output_shape)
     
-    adam = keras.optimizers.adam(lr=0.001)
+    layer15 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    cnn.add(layer15)
+    print(layer15.output_shape)
+    
+    layer16 = keras.layers.Conv2D(2, (1, 1), activation='relu')
+    cnn.add(layer16)
+    print(layer16.output_shape)
+    
+    adam = keras.optimizers.adam(lr=0.0001)
     cnn.compile(loss='categorical_crossentropy', optimizer=adam)
     
     return cnn
@@ -173,7 +181,7 @@ def buildFusioncnn():
     cnn.add(layer8)
     print(layer8.output_shape)
     
-    adam = keras.optimizers.adam(lr=0.001)
+    adam = keras.optimizers.adam(lr=0.0001)
     cnn.compile(loss='categorical_crossentropy', optimizer=adam)
     
     return cnn
