@@ -15,47 +15,52 @@ import glob
 import PIL.Image
 import copy
 
-def buildLeNet():
+def buildThickcnn():
     
     cnn = keras.models.Sequential()
     
-    layer0 = keras.layers.Conv2D(6, (5, 5), activation='relu', input_shape=(32, 32, 1))
+    layer0 = keras.layers.Conv2D(128, (9, 9), activation='relu', input_shape=(32, 32, 1))
     cnn.add(layer0)
     print(layer0.input_shape)
     print(layer0.output_shape)
     
-    layer1 = keras.layers.MaxPooling2D(pool_size=(2, 2))
+    layer1 = keras.layers.Conv2D(128, (7, 7))
     cnn.add(layer1)
     print(layer1.output_shape)
     
-    layer2 = keras.layers.Conv2D(16, (5, 5), activation='relu')
+    layer2 = keras.layers.MaxPooling2D(pool_size=(2, 2))
     cnn.add(layer2)
     print(layer2.output_shape)
     
-    layer3 = keras.layers.MaxPooling2D(pool_size=(2, 2))
+    layer3 = keras.layers.Conv2D(256, (3, 3), activation='relu')
     cnn.add(layer3)
     print(layer3.output_shape)
     
-    layer4 = keras.layers.Flatten() 
+    layer4 = keras.layers.Conv2D(256, (3, 3), activation='relu')
     cnn.add(layer4)
     print(layer4.output_shape)
     
-    layer5 = keras.layers.Dense(120, activation='relu')
+    layer5 = keras.layers.UpSampling2D(size=(2, 2), data_format=None, interpolation='nearest')
     cnn.add(layer5)
     print(layer5.output_shape)
     
-    layer6 = keras.layers.Dense(84, activation='relu')
+    layer6 = keras.layers.Conv2D(256, (3, 3), activation='relu')
     cnn.add(layer6)
     print(layer6.output_shape)
     
-    layer7 = keras.layers.Dense(2, activation='softmax')
+    layer7 = keras.layers.Conv2D(256, (3, 3), activation='relu')
     cnn.add(layer7)
     print(layer7.output_shape)
+    
+    layer8 = keras.layers.Conv2D(2, (1, 1), activation='relu')
+    cnn.add(layer8)
+    print(layer8.output_shape)
     
     adam = keras.optimizers.adam(lr=0.001)
     cnn.compile(loss='categorical_crossentropy', optimizer=adam)
     
     return cnn
+
     
 def make2Dpatches(samples, batch, images, patchsize, label):
     
