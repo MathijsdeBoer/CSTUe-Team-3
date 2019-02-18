@@ -26,12 +26,12 @@ def buildThickcnn():
     
     cnn = keras.models.Sequential()
     
-    layer0 = keras.layers.Conv2D(128, (9, 9), activation='relu', input_shape=(32, 32, 1))
+    layer0 = keras.layers.Conv2D(16, (9, 9), activation='relu', input_shape=(32, 32, 1))
     cnn.add(layer0)
     print(layer0.input_shape)
     print(layer0.output_shape)
     
-    layer1 = keras.layers.Conv2D(128, (7, 7))
+    layer1 = keras.layers.Conv2D(16, (7, 7))
     cnn.add(layer1)
     print(layer1.output_shape)
     
@@ -39,11 +39,11 @@ def buildThickcnn():
     cnn.add(layer2)
     print(layer2.output_shape)
     
-    layer3 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer3 = keras.layers.Conv2D(32, (3, 3), activation='relu')
     cnn.add(layer3)
     print(layer3.output_shape)
     
-    layer4 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer4 = keras.layers.Conv2D(32, (3, 3), activation='relu')
     cnn.add(layer4)
     print(layer4.output_shape)
     
@@ -51,11 +51,11 @@ def buildThickcnn():
     cnn.add(layer5)
     print(layer5.output_shape)
     
-    layer6 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer6 = keras.layers.Conv2D(32, (3, 3), activation='relu')
     cnn.add(layer6)
     print(layer6.output_shape)
     
-    layer7 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer7 = keras.layers.Conv2D(32, (3, 3), activation='relu')
     cnn.add(layer7)
     print(layer7.output_shape)
     
@@ -73,12 +73,12 @@ def buildThincnn():
     
     cnn = keras.models.Sequential()
     
-    layer0 = keras.layers.Conv2D(128, (9, 9), activation='relu', input_shape=(32, 32, 1))
+    layer0 = keras.layers.Conv2D(16, (9, 9), activation='relu', input_shape=(32, 32, 1))
     cnn.add(layer0)
     print(layer0.input_shape)
     print(layer0.output_shape)
     
-    layer1 = keras.layers.Conv2D(128, (7, 7))
+    layer1 = keras.layers.Conv2D(16, (7, 7))
     cnn.add(layer1)
     print(layer1.output_shape)
     
@@ -86,11 +86,11 @@ def buildThincnn():
     cnn.add(layer2)
     print(layer2.output_shape)
     
-    layer3 = keras.layers.Conv2D(256, (5, 5), activation='relu')
+    layer3 = keras.layers.Conv2D(32, (5, 5), activation='relu')
     cnn.add(layer3)
     print(layer3.output_shape)
     
-    layer4 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer4 = keras.layers.Conv2D(32, (3, 3), activation='relu')
     cnn.add(layer4)
     print(layer4.output_shape)
     
@@ -98,11 +98,11 @@ def buildThincnn():
     cnn.add(layer5)
     print(layer5.output_shape)
     
-    layer6 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer6 = keras.layers.Conv2D(32, (3, 3), activation='relu')
     cnn.add(layer6)
     print(layer6.output_shape)
     
-    layer7 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer7 = keras.layers.Conv2D(32, (3, 3), activation='relu')
     cnn.add(layer7)
     print(layer7.output_shape)
     
@@ -110,11 +110,11 @@ def buildThincnn():
     cnn.add(layer8)
     print(layer8.output_shape)
     
-    layer9 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer9 = keras.layers.Conv2D(32, (3, 3), activation='relu')
     cnn.add(layer9)
     print(layer9.output_shape)
     
-    layer10 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer10 = keras.layers.Conv2D(32, (3, 3), activation='relu')
     cnn.add(layer10)
     print(layer10.output_shape)
     
@@ -131,11 +131,11 @@ def buildThincnn():
     cnn.add(layer13)
     print(layer13.output_shape)
     
-    layer14 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer14 = keras.layers.Conv2D(32, (3, 3), activation='relu')
     cnn.add(layer14)
     print(layer14.output_shape)
     
-    layer15 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer15 = keras.layers.Conv2D(32, (3, 3), activation='relu')
     cnn.add(layer15)
     print(layer15.output_shape)
     
@@ -152,12 +152,12 @@ def buildFusioncnn():
     
     cnn = keras.models.Sequential()
     
-    layer0 = keras.layers.Conv2D(256, (9, 9), activation='relu', input_shape=(32, 32, 4))
+    layer0 = keras.layers.Conv2D(32, (9, 9), activation='relu', input_shape=(32, 32, 1))
     cnn.add(layer0)
     print(layer0.input_shape)
     print(layer0.output_shape)
     
-    layer1 = keras.layers.Conv2D(256, (7, 7))
+    layer1 = keras.layers.Conv2D(32, (7, 7))
     cnn.add(layer1)
     print(layer1.output_shape)
     
@@ -165,11 +165,11 @@ def buildFusioncnn():
     cnn.add(layer2)
     print(layer2.output_shape)
     
-    layer3 = keras.layers.Conv2D(256, (5, 5), activation='relu')
+    layer3 = keras.layers.Conv2D(32, (5, 5), activation='relu')
     cnn.add(layer3)
     print(layer3.output_shape)
     
-    layer4 = keras.layers.Conv2D(256, (3, 3), activation='relu')
+    layer4 = keras.layers.Conv2D(32, (3, 3), activation='relu')
     cnn.add(layer4)
     print(layer4.output_shape)
     
@@ -177,11 +177,11 @@ def buildFusioncnn():
     cnn.add(layer5)
     print(layer5.output_shape)
     
-    layer6 = keras.layers.Conv2D(256, (7, 7), activation='relu')
+    layer6 = keras.layers.Conv2D(32, (7, 7), activation='relu')
     cnn.add(layer6)
     print(layer6.output_shape)
     
-    layer7 = keras.layers.Conv2D(256, (9, 9), activation='relu')
+    layer7 = keras.layers.Conv2D(32, (9, 9), activation='relu')
     cnn.add(layer7)
     print(layer7.output_shape)
     
@@ -443,7 +443,7 @@ def main():
     trainnetwork = True
     
     #initialise the network
-    cnn = buildThickcnn()
+    cnn = buildThincnn()
    
     #and start training
     if trainnetwork: 
@@ -578,7 +578,7 @@ def main():
     trainnetwork = True
     
     #initialise the network
-    cnn = buildThickcnn()
+    cnn = buildFusioncnn()
    
     #and start training
     if trainnetwork: 
