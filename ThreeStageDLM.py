@@ -2,7 +2,19 @@
 """
 Created on Mon Feb 18 11:33:03 2019
 
-@author: marge
+@author: Evianne and Margely
+
+First model:    Input:  ground truth with only thick vessels and fundus image
+                Output: segmented thick vessels
+              
+Second model:   Input:  ground truth with only thin vessels and fundus image
+                Output: segmented thin vessels
+                
+Third model:    Input:  ground truth with both thick and thin vessels and fundus image
+                Output: segmented thick and thin vessels
+                
+Output of the first and second model needs to be concatenated and compared with the 
+output of the third model to see whether it improves the preformance if you seperate thick and thin vessels during training. 
 """
 
 import numpy as np
@@ -654,7 +666,6 @@ def main():
 
     return   
   
-    #vis = np.concatenate((img1,img2),axis=0) #change images names!!
     
 if __name__=="__main__":
     main()
