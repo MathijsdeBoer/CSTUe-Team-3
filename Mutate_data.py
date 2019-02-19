@@ -9,19 +9,28 @@ import SimpleITK as sitk
 from os import listdir
 from os.path import isfile, join
 
-def mutate_data(image_patches, label_patches, noise_strength=20, new_records=1000, seed=314159):
+def mutate_data(images, masks, segmentations, noise_strength=20, new_records=1000, seed=314159):
     count = 0
     random.seed(seed)
 
+    res_im = np.array(images)
+    res_ma = np.array(masks)
+    res_se = np.array(segmentations)
+
     print("Mutating Data...")
+    print("SETTINGS")
+    print("\tNoise Strength = {}".format(noise_strength))
+    print("\tNew Records = {}".format(new_records))
+    print("\tSeed = {}".format(seed))
     while count < new_records:
         # Fetch random patient images
         print("{}/{}".format(count, new_records), end='\r')
 
-        idx = random.randint(0, image_patches.shape[0])
+        idx = random.randint(0, images.shape[0] - 1)
 
-        image_patch = image_patches[idx,:,:,:]
-        label_patch = label_patches[idx,:,:,:]
+        image = images[idx]
+        mask = masks[idx]
+        segmentation = segmentations[idx]
 
         # Mutate images
         # Determine which operation to perform
@@ -36,35 +45,46 @@ def mutate_data(image_patches, label_patches, noise_strength=20, new_records=100
             # There's probably a cleaner way to do this, but it works
             if rot == 0:
                 # Rotate once
-                np.rot90(image_patch)
+                np.rot90(image)
 
-                np.rot90(label_patch)
+                np.rot90(mask)
+
+                np.rot90(segmentation)
             elif rot == 1:
                 # Rotate twice
-                np.rot90(image_patch)
-                np.rot90(image_patch)
+                np.rot90(image)
+                np.rot90(image)
 
-                np.rot90(label_patch)
-                np.rot90(label_patch)
+                np.rot90(mask)
+                np.rot90(mask)
+
+                np.rot90(segmentation)
+                np.rot90(segmentation)
             else:
                 # Rotate thrice
-                np.rot90(image_patch)
-                np.rot90(image_patch)
-                np.rot90(image_patch)
+                np.rot90(image)
+                np.rot90(image)
+                np.rot90(image)
 
-                np.rot90(label_patch)
-                np.rot90(label_patch)
-                np.rot90(label_patch)
+                np.rot90(mask)
+                np.rot90(mask)
+                np.rot90(mask)
+
+                np.rot90(segmentation)
+                np.rot90(segmentation)
+                np.rot90(segmentation)
 
         # Random noise (normal distribution)
         elif operation == 1:
             # Noise is only applied to the actual image
-            image_patch = np.random.normal(image_patch, noise_strength)
+            image = np.random.normal(image, noise_strength)
 
         # Save
-        np.append(image_patches, image_patch, axis=0)
-        np.append(label_patches, label_patch, axis=0)
+        res_im = np.append(res_im, [image], axis=0)
+        res_ma = np.append(res_ma, [mask], axis=0)
+        res_se = np.append(res_se, [segmentation], axis=0)
 
         count += 1
 
     print("Mutated images")
+    return res_im, res_ma, res_se
