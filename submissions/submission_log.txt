@@ -1,0 +1,12 @@
+Submission Log:
+
+submission_01 --> bug
+submission_02 --> Unet - Random weight initialization - No data augmentation - Green channel only - 15/5 train/valid split - Average optimal thres (Dice score: 0.6765296300909376)
+submission_03 --> Same as submission_02 + PRETRAINED model on vgg + Different probability threshold (Dice score: 0.7136362493528561)
+
+
+Future submissions:
+* Data augmentation
+* Leave one out validation
+* Multiclass - classification with different labels for thin and thick vessels
+* Two different networks: one trained on thin , one trained on thick vessels

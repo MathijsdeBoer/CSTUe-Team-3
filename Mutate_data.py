@@ -42,7 +42,7 @@ def mutate_data(images, masks, segmentations, noise_strength=64, new_records=100
         if operation == 0:
             # Determine new orientation
             rot = random.randint(0, 2)
-            
+
             if rot == 0:
                 # Flip over one axis
                 image = np.flipud(image)
