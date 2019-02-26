@@ -301,8 +301,8 @@ for j in range(len(valimpaths)):
         # Scale
         Xval = (Xval - mean_per_patch_val) / std_per_patch_val
 
-        # prob = cnn.predict(Xval, batch_size=minibatchsize)
-        prob = np.random.rand(valbatch.shape[0], 2) # used for debugging
+        prob = cnn.predict(Xval, batch_size=minibatchsize)
+        # prob = np.random.rand(valbatch.shape[0], 2) # used for debugging
         probabilities = np.concatenate((probabilities,prob[:,1]))
 
     for i in range(len(valsamples[0])):
@@ -365,8 +365,8 @@ for j in range(len(test_paths)):
         # Scale
         Xtest = (Xtest - mean_per_patch_test) / std_per_patch_test
 
-        # prob = cnn.predict(Xtest, batch_size=minibatchsize)
-        prob = np.random.rand(testbatch.shape[0], 2) # used for debugging
+        prob = cnn.predict(Xtest, batch_size=minibatchsize)
+        # prob = np.random.rand(testbatch.shape[0], 2) # used for debugging
         probabilities = np.concatenate((probabilities,prob[:,1]))
 
     for i in range(len(testsamples[0])):
@@ -421,8 +421,8 @@ for j in range(len(impaths)):
         # Scale
         Xtrain = (Xtrain - mean_per_patch_train) / std_per_patch_train
 
-        #prob = cnn.predict(Xtrain, batch_size=minibatchsize)
-        prob = np.random.rand(trainbatch.shape[0], 2) # used for debugging
+        prob = cnn.predict(Xtrain, batch_size=minibatchsize)
+        # prob = np.random.rand(trainbatch.shape[0], 2) # used for debugging
         probabilities = np.concatenate((probabilities,prob[:,1]))
 
     for i in range(len(trainsamples[0])):
