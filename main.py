@@ -215,6 +215,19 @@ if trainnetwork:
         Xpos, Ypos = make2Dpatches(positivesamples,posbatch,images,32,1)
         Xneg, Yneg = make2Dpatches(negativesamples,negbatch,images,32,0)
 
+        # Z-score normalization (Global Contrast Normalization)
+        # Calculate mean per patch
+        mean_per_patch_pos = np.mean(Xpos, axis=(1,2), keepdims=True)
+        mean_per_patch_neg = np.mean(Xneg, axis=(1,2), keepdims=True)
+
+        # Calculate std per patch
+        std_per_patch_pos = np.std(Xpos, axis=(1,2), keepdims=True)
+        std_per_patch_neg = np.std(Xneg, axis=(1,2), keepdims=True)
+
+        # Scale
+        Xpos = (Xpos - mean_per_patch_pos) / std_per_patch_pos
+        Xneg = (Xneg - mean_per_patch_neg) / std_per_patch_neg
+
         Xtrain = np.vstack((Xpos,Xneg))
         Ytrain = np.vstack((Ypos,Yneg))
 
@@ -228,26 +241,29 @@ if trainnetwork:
     plt.figure()
     plt.plot(losslist)
 
-    cnn.save(r'.\exp02_Unet.h5')
+    cnn.save(r'.\sub04_Unet.h5')
 
 else:
-    cnn = keras.models.load_model(r'.\exp02_Unet.h5')
+    cnn = keras.models.load_model(r'.\sub04_Unet.h5')
 
 #validate the trained network on the 5 images that were left out during training (numbers 15 to 19)
 valimpaths = impaths_all[trainingsetsize:]
 valmaskpaths = maskpaths_all[trainingsetsize:]
 
 # Create directory to store results
-dirName = "exp02_results"
+dirName = "sub04_results"
 try:
     # Create target directory
     os.mkdir(dirName)
     print("Directory ", dirName, " was created")
 except FileExistsError:
     print("Directory", dirName, " already exists")
+os.mkdir(dirName + "//training_results")
 os.mkdir(dirName + "//validation_results")
 os.mkdir(dirName + "//test_results")
 
+#################################################################################
+# EVALUATE FOR THE VALIDATION SET
 for j in range(len(valimpaths)):
     print(valimpaths[j])
 
@@ -275,13 +291,18 @@ for j in range(len(valimpaths)):
             valbatch = np.arange(i,len(valsamples[0]))
 
         Xval = make2Dpatchestest(valsamples,valbatch,valimage,patchsize)
-        # Scale patch
-        Xval_max = np.amax(Xval[:,:,:,0], axis=2)
-        Xval_max = np.amax(Xval_max, axis=1)
-        Xval /= Xval_max[:,np.newaxis,np.newaxis,np.newaxis]
+        # Z-score normalization (Global Contrast Normalization)
+        # Calculate mean per patch
+        mean_per_patch_val = np.mean(Xval, axis=(1,2), keepdims=True)
 
-        prob = cnn.predict(Xval, batch_size=minibatchsize)
-        #prob = np.random.rand(valbatch.shape[0], 2) # used for debugging
+        # Calculate std per patch
+        std_per_patch_val = np.std(Xval, axis=(1,2), keepdims=True)
+
+        # Scale
+        Xval = (Xval - mean_per_patch_val) / std_per_patch_val
+
+        # prob = cnn.predict(Xval, batch_size=minibatchsize)
+        prob = np.random.rand(valbatch.shape[0], 2) # used for debugging
         probabilities = np.concatenate((probabilities,prob[:,1]))
 
     for i in range(len(valsamples[0])):
@@ -334,13 +355,18 @@ for j in range(len(test_paths)):
             testbatch = np.arange(i,len(testsamples[0]))
 
         Xtest = make2Dpatchestest(testsamples,testbatch,testimage,patchsize)
-        # Scale patch
-        Xtest_max = np.amax(Xtest[:,:,:,0], axis=2)
-        Xtest_max = np.amax(Xtest_max, axis=1)
-        Xtest /= Xtest_max[:,np.newaxis,np.newaxis,np.newaxis]
+        # Z-score normalization (Global Contrast Normalization)
+        # Calculate mean per patch
+        mean_per_patch_test = np.mean(Xtest, axis=(1,2), keepdims=True)
 
-        prob = cnn.predict(Xtest, batch_size=minibatchsize)
-        # prob = np.random.rand(testbatch.shape[0], 2) # used for debugging
+        # Calculate std per patch
+        std_per_patch_test = np.std(Xtest, axis=(1,2), keepdims=True)
+
+        # Scale
+        Xtest = (Xtest - mean_per_patch_test) / std_per_patch_test
+
+        # prob = cnn.predict(Xtest, batch_size=minibatchsize)
+        prob = np.random.rand(testbatch.shape[0], 2) # used for debugging
         probabilities = np.concatenate((probabilities,prob[:,1]))
 
     for i in range(len(testsamples[0])):
@@ -355,3 +381,59 @@ for j in range(len(test_paths)):
     plt.imshow(probimage,cmap='Greys_r')
     plt.axis('off')
     plt.savefig(test_path_img)
+
+################################################################################
+# EVALUATE FOR THE TRAINING SET
+for j in range(len(impaths)):
+    print(impaths[j])
+
+    # Keep only green channel. Note that the scalling takes place in the paches
+    image = np.array(PIL.Image.open(impaths[j]),dtype=np.int16)[:,:,1]
+    mask = np.array(PIL.Image.open(maskpaths[j]),dtype=np.int16)
+
+    image = np.pad(image,((halfsize,halfsize),(halfsize,halfsize)),'constant', constant_values=0)
+    mask = np.pad(mask,((halfsize,halfsize),(halfsize,halfsize)),'constant', constant_values=0)
+
+    trainsamples = np.nonzero(mask)
+
+    probimage = np.zeros(image.shape)
+
+    probabilities = np.empty((0,))
+
+    minibatchsize = 1000 #can be as large as memory allows during testing
+
+    for i in range(0,len(trainsamples[0]),minibatchsize):
+        print('{}/{} samples labelled'.format(i,len(trainsamples[0])))
+
+        if i+minibatchsize < len(trainsamples[0]):
+            trainbatch = np.arange(i,i+minibatchsize)
+        else:
+            trainbatch = np.arange(i,len(trainsamples[0]))
+
+        Xtrain = make2Dpatchestest(trainsamples,trainbatch,image,patchsize)
+        # Z-score normalization (Global Contrast Normalization)
+        # Calculate mean per patch
+        mean_per_patch_train = np.mean(Xtrain, axis=(1,2), keepdims=True)
+
+        # Calculate std per patch
+        std_per_patch_train = np.std(Xtrain, axis=(1,2), keepdims=True)
+
+        # Scale
+        Xtrain = (Xtrain - mean_per_patch_train) / std_per_patch_train
+
+        #prob = cnn.predict(Xtrain, batch_size=minibatchsize)
+        prob = np.random.rand(trainbatch.shape[0], 2) # used for debugging
+        probabilities = np.concatenate((probabilities,prob[:,1]))
+
+    for i in range(len(trainsamples[0])):
+        probimage[trainsamples[0][i],trainsamples[1][i]] = probabilities[i]
+
+    train_path_prob = dirName + "//training_results//" + "train_probabilities_{}".format(j+1)
+    np.save(train_path_prob, probimage)
+
+    train_path_img = dirName + "//training_results//" + "{}.png".format(j+1)
+
+    plt.figure()
+    plt.imshow(probimage,cmap='Greys_r')
+    plt.axis('off')
+    plt.savefig(train_path_img)
