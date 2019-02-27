@@ -5,6 +5,7 @@ submission_02 --> Unet - Random weight initialization - No data augmentation - G
 submission_03 --> Same as submission_02 + PRETRAINED model on vgg + Different probability threshold (Dice score: 0.7136362493528561)
 submission_04 --> CORRECT NORMALIZATION, Global Contrast Normalization, the rest as before (Dice score: 0.7883)
 submission_05 --> No pretrained - comparison  to sub04 (Dice score: 0.7868966507961889)
+submission_06 --> Fixed bug in test masks (previous submissions were using training masks as test masks) (Dice score: 0.7883361377015411)
 
 Future submissions:
 * Data augmentation
