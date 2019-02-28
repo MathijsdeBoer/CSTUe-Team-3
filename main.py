@@ -19,6 +19,7 @@ random.seed(0)
 import glob
 import PIL.Image
 import copy
+from scipy.ndimage import rotate
 
 from image_patch_functions import *
 from Unet_architecture import *
@@ -75,7 +76,7 @@ negativesamples = np.nonzero(masks-segmentations)
 print(len(positivesamples[0]))
 print(len(negativesamples[0]))
 
-trainnetwork = False
+trainnetwork = True
 
 #initialise the network
 cnn = Unet(pretrained_weights = 0)
@@ -88,11 +89,34 @@ if trainnetwork:
         posbatch = random.sample(list(range(len(positivesamples[0]))),int(minibatchsize/2))
         negbatch = random.sample(list(range(len(negativesamples[0]))),int(minibatchsize/2))
 
-        Xpos, Ypos = make2Dpatches(positivesamples,posbatch,images,32,1)
-        Xneg, Yneg = make2Dpatches(negativesamples,negbatch,images,32,0)
+        Xpos, Ypos = make2Dpatches(positivesamples,posbatch,images,2*patchsize,1) # double patchsize for rotation
+        Xneg, Yneg = make2Dpatches(negativesamples,negbatch,images,2*patchsize,0)   # it is cropped later
 
-        Xtrain = np.vstack((Xpos,Xneg))
-        Ytrain = np.vstack((Ypos,Yneg))
+        # Data augmentation: Only rotation between 0 360 deg
+        # For every patch, it creates 10 more rotated patches
+        # Notice: that the minibatchsize becomes 11 times bigger!
+        augmentations = 10
+        Xpos_aug = copy.deepcopy(Xpos[:,halfsize:-halfsize,halfsize:-halfsize,:])
+        Xneg_aug = copy.deepcopy(Xneg[:,halfsize:-halfsize,halfsize:-halfsize,:])
+        Ypos_aug = copy.deepcopy(Ypos)
+        Yneg_aug = copy.deepcopy(Yneg)
+
+        for i in range(augmentations):
+            angle = np.random.randint(361) # same angle for all samples
+            Xpos_rot = rotate(Xpos, angle=angle, axes=(1,2), reshape=False)
+            Xpos_rot = Xpos_rot[:,halfsize:-halfsize,halfsize:-halfsize,:]
+
+            Xneg_rot = rotate(Xneg, angle=angle, axes=(1,2), reshape=False)
+            Xneg_rot = Xneg_rot[:,halfsize:-halfsize,halfsize:-halfsize,:]
+
+            Xpos_aug = np.vstack((Xpos_aug, Xpos_rot))
+            Xneg_aug = np.vstack((Xneg_aug, Xneg_rot))
+
+            Ypos_aug = np.vstack((Ypos_aug, Ypos))
+            Yneg_aug = np.vstack((Yneg_aug, Yneg))
+
+        Xtrain = np.vstack((Xpos_aug,Xneg_aug))
+        Ytrain = np.vstack((Ypos_aug,Yneg_aug))
 
         loss = cnn.train_on_batch(Xtrain,Ytrain)
         losslist.append(loss)
@@ -104,10 +128,10 @@ if trainnetwork:
     plt.figure()
     plt.plot(losslist)
 
-    cnn.save(r'.\sub04_Unet.h5')
+    cnn.save(r'.\sub07_Unet.h5')
 
 else:
-    cnn = keras.models.load_model(r'.\sub04_Unet.h5')
+    cnn = keras.models.load_model(r'.\sub07_Unet.h5')
     # cnn = keras.models.load_model(r'.\experiments\Unet10000.h5') # for debugging
 
 
@@ -123,7 +147,7 @@ trainimpaths = impaths_all[:trainingsetsize]
 trainmaskpaths = maskpaths_all[:trainingsetsize]
 
 # Create directory to store results
-dirName = "sub04_results"
+dirName = "sub07_results"
 try:
     # Create target directory
     os.mkdir(dirName)
