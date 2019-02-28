@@ -101,7 +101,7 @@ if trainnetwork:
         Ypos_aug = copy.deepcopy(Ypos)
         Yneg_aug = copy.deepcopy(Yneg)
 
-        for i in range(augmentations):
+        for j in range(augmentations):
             angle = np.random.randint(361) # same angle for all samples
             Xpos_rot = rotate(Xpos, angle=angle, axes=(1,2), reshape=False)
             Xpos_rot = Xpos_rot[:,halfsize:-halfsize,halfsize:-halfsize,:]
