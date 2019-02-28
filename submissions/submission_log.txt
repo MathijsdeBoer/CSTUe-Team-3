@@ -4,8 +4,9 @@ submission_01 --> bug
 submission_02 --> Unet - Random weight initialization - No data augmentation - Green channel only - 15/5 train/valid split - Average optimal thres (Dice score: 0.6765296300909376)
 submission_03 --> Same as submission_02 + PRETRAINED model on vgg + Different probability threshold (Dice score: 0.7136362493528561)
 submission_04 --> CORRECT NORMALIZATION, Global Contrast Normalization, the rest as before (Dice score: 0.7883)
-submission_05 --> No pretrained - comparison  to sub04 (Dice score: 0.7868966507961889)
-submission_06 --> Fixed bug in test masks (previous submissions were using training masks as test masks) (Dice score: 0.7883361377015411)
+submission_05(bug in submission) --> No pretrained - comparison  to sub04 (Dice score: 0.7868966507961889)
+submission_06(bug in submission) --> Fixed bug in test masks (previous submissions were using training masks as test masks) (Dice score: 0.7883361377015411)
+submission_07--> Correct test masks - no data augmentation - pretrained - 20000 minibatches
 
 Future submissions:
 * Data augmentation
