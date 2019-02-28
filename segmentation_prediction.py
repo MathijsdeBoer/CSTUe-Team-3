@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from image_patch_functions import *
 
-def make_predictions(impaths, maskpaths, dirName, mode, cnn, halfsize=32, debug=False, minibatchsize=1000):
+def make_predictions(impaths, maskpaths, dirName, mode, cnn, patchsize=32, debug=False, minibatchsize=1000):
   """
   Produces the segmentation probability arrays and the corresponding
   PNG images. Note: predictions need to be thresholded before submitted
@@ -11,6 +11,8 @@ def make_predictions(impaths, maskpaths, dirName, mode, cnn, halfsize=32, debug=
   mode: 'train', 'val' or 'test'
   cnn: the trained model
   """
+
+  halfsize = int(patchsize/2)
 
   for j in range(len(impaths)):
       print(impaths[j])
@@ -34,7 +36,7 @@ def make_predictions(impaths, maskpaths, dirName, mode, cnn, halfsize=32, debug=
           else:
               batch = np.arange(i,len(samples[0]))
 
-          X = make2Dpatchestest(samples,batch,image,patchsize=2*halfsize)
+          X = make2Dpatchestest(samples,batch,image,patchsize=patchsize)
 
           if debug:
               prob = np.random.rand(batch.shape[0], 2) # used for debugging
