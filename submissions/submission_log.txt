@@ -6,8 +6,9 @@ submission_03 --> Same as submission_02 + PRETRAINED model on vgg + Different pr
 submission_04 --> CORRECT NORMALIZATION, Global Contrast Normalization, the rest as before (Dice score: 0.7883)
 submission_05(bug in submission) --> No pretrained - comparison  to sub04 (Dice score: 0.7868966507961889)
 submission_06(bug in submission) --> Fixed bug in test masks (previous submissions were using training masks as test masks) (Dice score: 0.7883361377015411)
-submission_07--> Correct test masks - no data augmentation - pretrained - 20000 minibatches
-submission_08--> Correct test masks - no data augmentation - pretrained - 40000 minibatches
+submission_07--> Correct test masks - no data augmentation - pretrained - 20000 minibatches (Dice score: 0.7858356347484613)
+submission_08--> Correct test masks - no data augmentation - pretrained - 40000 minibatches (Dice score: 0.7826808159051842)
+submission_09--> Correct test masks - no data augmentation - pretrained - 10000 minibatches (Dice score:0.7883351582817496)
 
 Future submissions:
 * Data augmentation
