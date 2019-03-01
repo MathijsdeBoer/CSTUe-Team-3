@@ -31,7 +31,7 @@ trainingsetsize = 15
 patchsize = 64 # 64 for augmentation, the final patches will be 32x32
 halfsize = int(patchsize/2)
 quartersize = int(patchsize/4)
-minibatchsize = 200
+minibatchsize = 20
 minibatches = 10000
 
 
@@ -94,9 +94,9 @@ if trainnetwork:
         Xneg, Yneg = make2Dpatches(negativesamples,negbatch,images,patchsize,0)   # it is cropped later
 
         # Data augmentation: Only rotation between 0 360 deg
-        # For every patch, it creates 10 more rotated patches
-        # Notice: that the minibatchsize becomes 11 times bigger!
-        augmentations = 10
+        # For every patch, it creates 9 more rotated patches
+        # Notice: that the minibatchsize becomes 10 times bigger!
+        augmentations = 9
         Xpos_aug = copy.deepcopy(Xpos[:,quartersize:-quartersize,quartersize:-quartersize,:])
         Xneg_aug = copy.deepcopy(Xneg[:,quartersize:-quartersize,quartersize:-quartersize,:])
         Ypos_aug = copy.deepcopy(Ypos)
@@ -129,10 +129,10 @@ if trainnetwork:
     plt.figure()
     plt.plot(losslist)
 
-    cnn.save(r'.\sub10_Unet.h5')
+    cnn.save(r'.\sub11_Unet.h5')
 
 else:
-    cnn = keras.models.load_model(r'.\sub10_Unet.h5')
+    cnn = keras.models.load_model(r'.\sub11_Unet.h5')
     # cnn = keras.models.load_model(r'.\experiments\Unet10000.h5') # for debugging
 
 
@@ -148,7 +148,7 @@ trainimpaths = impaths_all[:trainingsetsize]
 trainmaskpaths = maskpaths_all[:trainingsetsize]
 
 # Create directory to store results
-dirName = "sub10_results"
+dirName = "sub11_results"
 try:
     # Create target directory
     os.mkdir(dirName)
