@@ -25,6 +25,8 @@ from image_patch_functions import *
 from Unet_architecture import *
 from segmentation_prediction import make_predictions
 
+from Mutate_data import mutate_data
+
 #inputs
 impaths_all = glob.glob(r'.\training\images\*.tif')
 trainingsetsize = 15
@@ -33,6 +35,7 @@ halfsize = int(patchsize/2)
 quartersize = int(patchsize/4)
 minibatchsize = 20
 minibatches = 10000
+new_mutations = 300 - 15
 
 
 #shuffle the images to take a random subset for training later
@@ -64,6 +67,13 @@ images, masks, segmentations = loadImages(impaths,maskpaths,segpaths)
 print(images.shape)
 print(masks.shape)
 print(segmentations.shape)
+
+images, masks, segmentations = mutate_data(images, masks, segmentations)
+
+print(images.shape)
+print(masks.shape)
+print(segmentations.shape)
+
 
 #pad the images with zeros to allow patch extraction at all locations
 images = np.pad(images,((0,0),(halfsize,halfsize),(halfsize,halfsize)),'constant', constant_values=0)

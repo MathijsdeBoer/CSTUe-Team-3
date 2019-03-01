@@ -15,9 +15,23 @@ def mutate_data(images, masks, segmentations, noise_strength=64, new_records=100
     count = 0
     random.seed(seed)
 
-    res_im = np.array(images)
-    res_ma = np.array(masks)
-    res_se = np.array(segmentations)
+    # Get how many original images we have
+    original_amount = images.shape[0]
+
+    # Preallocate array space for new images
+    new_shape = images.shape
+    new_shape = list(new_shape)
+    new_shape[0] += new_records
+    new_shape = tuple(new_shape)
+
+    res_im = np.zeros(new_shape)
+    res_ma = np.zeros(new_shape)
+    res_se = np.zeros(new_shape)
+
+    # Place original images into result array
+    res_im[0:images.shape[0], 0:images.shape[1], 0:images.shape[2]] = images
+    res_ma[0:masks.shape[0], 0:masks.shape[1], 0:masks.shape[2]] = masks
+    res_se[0:segmentations.shape[0], 0:segmentations.shape[1], 0:segmentations.shape[2]] = segmentations
 
     print("Mutating Data...")
     print("SETTINGS")
@@ -75,9 +89,9 @@ def mutate_data(images, masks, segmentations, noise_strength=64, new_records=100
             image = ndimage.gaussian_filter(image, 2)
 
         # Save
-        res_im = np.append(res_im, [image], axis=0)
-        res_ma = np.append(res_ma, [mask], axis=0)
-        res_se = np.append(res_se, [segmentation], axis=0)
+        res_im[original_amount + count] = image
+        res_ma[original_amount + count] = mask
+        res_se[original_amount + count] = segmentation
 
         count += 1
 
