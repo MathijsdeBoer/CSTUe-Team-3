@@ -9,7 +9,8 @@ submission_06(bug in submission) --> Fixed bug in test masks (previous submissio
 submission_07--> Correct test masks - no data augmentation - pretrained - 20000 minibatches (Dice score: 0.7858356347484613)
 submission_08--> Correct test masks - no data augmentation - pretrained - 40000 minibatches (Dice score: 0.7826808159051842)
 submission_09--> Correct test masks - no data augmentation - pretrained - 10000 minibatches (Dice score:0.7883351582817496)
-submission_10--> Data aumentation - pretrained - 10000 minibatches (Dice score: 0.7658347769125412)
+submission_10--> Data aumentation - pretrained - 200 minibatchsize (2200 actual) - 10000 minibatches (Dice score: 0.7658347769125412)
+submission_11--> Data aumentation - pretrained - 20 minibatchsize (200 actual) - 5000 minibatches (Dice score: 0.747969003954064)
 
 Future submissions:
 * Data augmentation
