@@ -1,7 +1,8 @@
-
-"""
 CSTUe-Team-3
+
 05-03-2019
+
+Push the 'raw' button for easy reading
 
 Segmenting retinal fundus images
 Investigating the differences of a network trained on ground truth containing all vessels and the concatenation of network
@@ -52,4 +53,4 @@ Submissions:
 	  In the folders, you can find the vlidation images with the predicted vessel segmentations
 	  submission_log.txt:
 	    	An overview of the several submitted models and their corresponding dice scores.
-"""
+	
