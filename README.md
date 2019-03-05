@@ -1,3 +1,5 @@
+
+"""
 CSTUe-Team-3
 05-03-2019
 
@@ -50,4 +52,4 @@ Submissions:
 	  In the folders, you can find the vlidation images with the predicted vessel segmentations
 	  submission_log.txt:
 	    	An overview of the several submitted models and their corresponding dice scores.
-
+"""
