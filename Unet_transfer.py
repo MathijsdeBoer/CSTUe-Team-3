@@ -8,7 +8,7 @@ Created on Wed Feb 20 18:08:45 2019
 '''
 This py file do the transfering from Vgg16(trainied on imagenet). But please always restart python console before 
 running this file, otherwise the name of each layer would change.
-After transfering, the Unet cannot be fed for trainign immediatly.
+After transfering, the Unet cannot be fed for training immediatly.
 The transfered parameters should first be freezed and other layers should be trained first.
 Then transfered parameters could be freed and the whole network could be trained together.
 Learning rate for 'freezed-training' should be 1e-5
