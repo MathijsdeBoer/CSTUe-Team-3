@@ -1,4 +1,20 @@
-# Adapted from Team Challenge Team 4 code
+'''
+Adapted from Team Challenge Team 4 code, 05-03-2019
+
+In this code, data is augmentated by mutating the original training set. 
+There are 4 operations, which are randomly applied to the training images using random.randint(0,3). 
+1) Rotation: The image, mask and segmentations of the trainingset are fliped over the x-axis, the y-axis or both. 
+   The flip direction is randomly chosen again using random.randint(0,2); 
+2) Noise: A normal distributed noise is only applied to the actual image; 
+3) Contrast change: The pixel values of the image is multiplied with a random chosen integer between 0.5 and 1.5; 
+4) Blur Kernel: Gaussian blur with sigma 2 is applied to the image. 
+Input parameters: 
+    images, masks, segmentations: the original of the training set. 
+    noise_strength: integer, is used as standard deviation in the noise operation. 
+    new_records: amount of generated training samples which will be added to the original. 
+Output: 
+    The original and generated images, masks and segmentations.
+'''
 
 import glob
 import numpy as np
