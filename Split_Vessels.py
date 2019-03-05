@@ -1,11 +1,15 @@
 '''
-The model will be trained on thick and thin vessels seperately. For this the ground truth of the data set should be split up.
-Thickness threshold: the minimum amound of pixels for which a vessel will be classified as thick. 
+05-03-2019
+Seperating ground truth for thick and thin vessels.
+
+Thickness threshold: 
+    The minimum amound of pixels for which a vessel will be classified as thick. 
 First the skeleton of the segmented vessels will be made. 
 Also the smallest distance from the skelet to the background will be determined. 
 This distance and the thickness threshold will be used to determine wheter the vessel should be classified as thick or thin. 
 The draw Circles part de-skeletonize the skeletons of the vessels. 
-Output: The images with thin and images with thick vessels segmented.
+Output: 
+    The images with thin and images with thick vessels segmented.
 '''
 
 import glob
