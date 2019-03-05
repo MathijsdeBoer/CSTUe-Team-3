@@ -104,9 +104,9 @@ def mixVggUnet():
     fromVgg['conv2d_7'] = 'block4_conv1'
     fromVgg['conv2d_8'] = 'block4_conv2'
     #transfer weights and bias.
-    #For the input layer, only paraeters from green channals are transfered
-    #Currently, we only use green channal for training, so the input layer 'Input'and first layer 'conv2d_1' is not trasfered
-    #After transfering, the transfered layers should be freezend and training other layers for some period 
+    #For the input layer, only parameters from green channals are transferred
+    #Currently, we only use green channel for training, so the input layer 'Input'and first layer 'conv2d_1' is not trasferred
+    #After transfering, the transferred layers should be freezend and training other layers for some period 
     #Then the whole network could be fed for training!
     #Learning rate is very tricky! Now it is setted to 1e-5.Maybe we can try some other values!
     for layersU in Unet.layers:
