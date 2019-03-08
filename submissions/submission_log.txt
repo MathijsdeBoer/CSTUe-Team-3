@@ -14,8 +14,10 @@ submission_11--> Data aumentation - pretrained - 20 minibatchsize (200 actual) -
 submission_12--> Data aumentation - pretrained - 20 minibatchsize (200 actual) - 10000 minibatches (Dice score: 0.7617963589553157)
 submission_13 --> Mathijs
 submission_14 --> Data mutation - pretrained - 20000minibatches - optimal threshold=average(train,valid) (Dice score: 0.7945618490516371)
-submission_15 --> Thich/thin split, thickness = 1mm, data mutation, threshold average of train valid (Dice score: 0.753979341144162)
+submission_15 --> Thick/thin split, thickness = 1mm, data mutation, threshold average of train valid (Dice score: 0.753979341144162)
 submission_16 --> Same as 15 but thick/thin prediction thresholds based only on validation set (Dice score: 0.7478106126799614)
+submission_17--> Same as 15 - 20000 minibatches (Dice score: 0.7453392528339132)
+submission_18--> Thick/thin, thickness = 1.5mm, data mutation, threshold average of train-valid (Dice score: 0.7693457585067428)
 
 Future submissions:
 * Leave one out validation or no validation
