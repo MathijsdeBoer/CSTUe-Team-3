@@ -18,8 +18,5 @@ submission_15 --> Thick/thin split, thickness = 1mm, data mutation, threshold av
 submission_16 --> Same as 15 but thick/thin prediction thresholds based only on validation set (Dice score: 0.7478106126799614)
 submission_17--> Same as 15 - 20000 minibatches (Dice score: 0.7453392528339132)
 submission_18--> Thick/thin, thickness = 1.5mm, data mutation, threshold average of train-valid (Dice score: 0.7693457585067428)
-
-Future submissions:
-* Leave one out validation or no validation
-* Multiclass - classification with different labels for thin and thick vessels
-* Two different networks: one trained on thin , one trained on thick vessels
+submission_19--> Same as submission 18, fixed bug in thin treshold calculation (Dice score: 0.7722693875978712)
+submission_20--> 3 class model (Dice score: 0.7249403607061229) 
